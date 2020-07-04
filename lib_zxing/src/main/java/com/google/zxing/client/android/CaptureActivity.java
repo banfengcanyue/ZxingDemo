@@ -437,6 +437,7 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
    * @param barcode   A greyscale bitmap of the camera data which was decoded.
    */
   public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
+    Log.i("tag","handleDecode: " + rawResult.toString());
     inactivityTimer.onActivity();
     lastResult = rawResult;
     ResultHandler resultHandler = ResultHandlerFactory.makeResultHandler(this, rawResult);
