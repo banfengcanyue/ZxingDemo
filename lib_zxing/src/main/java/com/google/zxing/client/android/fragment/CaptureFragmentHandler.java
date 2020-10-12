@@ -42,6 +42,7 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
+ * 此类处理所有包含要捕获的状态机的消息传递。
  * This class handles all the messaging which comprises the state machine for capture.
  *
  * @author dswitkin@google.com (Daniel Switkin)

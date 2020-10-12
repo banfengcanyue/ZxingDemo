@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
@@ -38,11 +39,16 @@ public class CaptureFragment extends Fragment implements SurfaceHolder.Callback 
     private Vector<BarcodeFormat> decodeFormats;
     private Map<DecodeHintType, ?> decodeHints;
     private String characterSet;
-    private CameraManager cameraManager;
-    private CaptureFragmentHandler handler;
+    private CameraManager cameraManager; // 摄像头管理
+    private CaptureFragmentHandler handler; // 扫描结果处理
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
     private ViewfinderView viewfinderView;
+    private ScanResultCallback scanResultCallback; // 扫描结果回调
+
+    public void setScanResultCallback(ScanResultCallback scanResultCallback) {
+        this.scanResultCallback = scanResultCallback;
+    }
 
     private CaptureFragment() {
         // Required empty public constructor
@@ -159,6 +165,11 @@ public class CaptureFragment extends Fragment implements SurfaceHolder.Callback 
 
     }
 
+    /**
+     * Surface创建好以后，开始初始化相机
+     *
+     * @param surfaceHolder Surface Holder
+     */
     private void initCamera(SurfaceHolder surfaceHolder) {
         if (cameraManager.isOpen()) {
             return;
@@ -174,10 +185,17 @@ public class CaptureFragment extends Fragment implements SurfaceHolder.Callback 
     }
 
     /**
-     * 扫描结果
+     * 扫描结果处理
      */
     public void handleDecode(Result rawResult, Bitmap barcode, float scaleFactor) {
         Log.i("tag", "--->handleDecode: " + rawResult.toString());
+        if (scanResultCallback != null) {
+            if (!TextUtils.isEmpty(rawResult.getText())) {
+                scanResultCallback.onSuccess(barcode, rawResult.getText());
+            } else {
+                scanResultCallback.onFailed();
+            }
+        }
     }
 
     /**
