@@ -112,7 +112,6 @@ public final class CaptureActivityHandler extends Handler {
       String browserPackageName = null;
       if (resolveInfo != null && resolveInfo.activityInfo != null) {
         browserPackageName = resolveInfo.activityInfo.packageName;
-        Log.d(TAG, "Using browser in package " + browserPackageName);
       }
 
       // Needed for default Android browser / Chrome only apparently
