@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.bfcy.zxingdemo.encrypt.DesUtil;
 import com.google.zxing.client.android.CaptureActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,16 +33,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        String key = "1234567890";
-        String str = DesUtil.encode("1234567890","hello");
-        Log.i("tag","DesUtil encode: " + str);
-        if (str == null) {
-            return;
-        }
-
-        String string = DesUtil.decode("1234567890", str);
-        Log.i("tag","DesUtil decode: " + string);
     }
 
     private void requestPermission() {
